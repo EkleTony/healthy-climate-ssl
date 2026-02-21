@@ -58,8 +58,8 @@ def main():
     plt.savefig(save_path, dpi=200)
     print(f"Saved plot to: {save_path}")
 
-    if not args.no_show:
-        plt.show()
+    # if not args.no_show:
+    #     plt.show()
 
 
 if __name__ == "__main__":
