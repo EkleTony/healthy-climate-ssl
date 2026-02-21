@@ -38,11 +38,10 @@ def test_one_step_training_no_nan():
     opt = Adam(model.parameters(), lr=1e-3)
 
     # simple corruption: mask 10% of observed entries
-    g = torch.Generator().manual_seed(0)
-    corr_clim = (torch.rand_like(x_clim, generator=g) < 0.1) & obs_clim
-    corr_poll = (torch.rand_like(x_poll, generator=g) < 0.1) & obs_poll
-    corr_soc = (torch.rand_like(x_soc, generator=g) < 0.1) & obs_soc
-
+    torch.manual_seed(0)
+    corr_clim = (torch.rand(x_clim.shape) < 0.1) & obs_clim
+    corr_poll = (torch.rand(x_poll.shape) < 0.1) & obs_poll
+    corr_soc = (torch.rand(x_soc.shape) < 0.1) & obs_soc
     x_clim_c = x_clim.clone()
     x_poll_c = x_poll.clone()
     x_soc_c = x_soc.clone()
