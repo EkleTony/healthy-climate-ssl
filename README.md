@@ -1,174 +1,236 @@
-# AI for Healthy Climate Adaptation — Synthetic Geospatial SSL (Havard PostDoc)
-
+# AI for Healthy Climate Adaptation — Synthetic Geospatial SSL (Harvard PostDoc)
 
 This repository contains my submission for the homework assignment associated with the Postdoctoral Research Position in AI for Healthy Climate Adaptation.
 
-The objective is to construct an end-to-end pipeline that:
+It provides a fully reproducible, end-to-end pipeline that:
 
-1. Generates a deterministic synthetic geospatial dataset with multimodal structure  
-2. Learns spatially-aware representations via self-supervised training  
-3. Evaluates learned embeddings on a region-level interpolation task  
+1. Generates a deterministic synthetic geospatial dataset  
+2. Trains a spatially-aware self-supervised model (GeoModRank)  
+3. Extracts region embeddings  
+4. Evaluates embeddings on a downstream interpolation task  
 
-The design is motivated by geospatial foundation modeling (e.g., PDFM), but implemented in a controlled synthetic setting.
+All reported results in `report.pdf` are reproducible from this repository using the commands below.
 
 ---
 
-## Repository Structure
+# Quick Reproduction (End-to-End)
+
+From a clean clone:
 
 ```
-.
-├── configs/
-│   └── dataset.yaml
-├── src/
-│   ├── data/
-│   │   ├── generate.py
-│   │   ├── graph.py
-│   │   └── plot_graph.py
-│   └── utils/
-│       └── seed.py
-├── data/
-│   └── v1_seed7/
-├── README.md
-└── report.pdf  (to be added)
+git clone <repo>
+cd healthy-climate-ssl
+
+conda create -n havard_postdoc python=3.10
+conda activate havard_postdoc
+pip install -r requirements.txt
+
+./run_all.sh
 ```
 
----
+This executes the full pipeline and reproduces all results reported in `report.pdf`.
 
-## Part A — Synthetic Dataset
-
-### Spatial Structure
-
-Regions are defined by planar 2D coordinates `(x, y) ∈ ℝ²`.  
-Distances are Euclidean. A kNN graph is constructed from these coordinates.
-
-To introduce realistic heterogeneity, regions are clustered into `K_states` via KMeans, producing a grouping variable `state_id`.
-
-### Modalities
-
-Each region contains three semantically distinct feature blocks:
-
-- **Climate-like features**
-- **Pollution-like features**
-- **Socio-demographic-like features**
-
-Each modality has its own dimensionality and noise structure.
-
-### Missingness
-
-Modality-specific missingness masks are explicitly generated and stored.  
-Missing values are masked and handled explicitly (never treated as ordinary numeric values).
-
-### Targets
-
-Two continuous region-level targets (`y1`, `y2`) are generated as functions of:
-
-- Smooth latent spatial fields  
-- Modality-level aggregates  
-- State-level shifts  
-- Idiosyncratic noise  
-
-This ensures that interpolation is meaningful but non-trivial.
-
-### Determinism
-
-Given a fixed seed and configuration, dataset generation is fully deterministic.
-
----
-
-## Data Format
-
-All artifacts are stored as PyTorch `.pt` files.
+All outputs are written to:
 
 ```
 data/v1_seed7/
 ```
 
-**regions.pt**
-- `coords` — FloatTensor `[N, 2]`
-- `state_id` — LongTensor `[N]`
+---
 
-**features.pt**
-- `climate` — `[N, d1]`
-- `pollution` — `[N, d2]`
-- `socio` — `[N, d3]`
+# 1. Environment Setup
 
-**masks.pt**
-- Boolean masks aligned with each modality
+```
+conda create -n havard_postdoc python=3.10
+conda activate havard_postdoc
+pip install -r requirements.txt
+```
 
-**targets.pt**
-- `y1`, `y2` — FloatTensor `[N]`
-
-**graph.pt**
-- `edge_index` — LongTensor `[2, E]`
-- `edge_weight`
-- `k`, `seed`
-
-**meta.json**
-- Seed and full configuration
+Python version used: 3.10  
+Frameworks: PyTorch, PyTorch Geometric  
 
 ---
 
-## Running the Pipeline
+# 2. Generate Synthetic Dataset
 
-### 1. Generate Dataset
+Dataset configuration is stored in:
+
+```
+configs/dataset.yaml
+```
+
+Reported results use:
+
+- Seed: 7
+- Version directory: `data/v1_seed7/`
+
+To generate the dataset:
 
 ```
 python -m src.data.generate
 ```
 
-### 2. Build kNN Graph
+This produces:
+
+- regions.pt
+- features.pt
+- masks.pt
+- targets.pt
+- meta.json
+
+All generation is deterministic given the seed in the config.
+
+---
+
+# 3. Build Spatial kNN Graph
 
 ```
 python -m src.data.graph data/v1_seed7 configs/dataset.yaml 7
 ```
 
-### 3. Visualize Graph
+This constructs:
 
-```
-python src/data/plot_graph.py
-```
+- graph.pt (edge_index, edge_weight, k, seed)
 
----
-
-## Part B — Self-Supervised Representation Learning (to be completed)
-
-A spatially-aware self-supervised model will be trained to reconstruct masked multimodal inputs.  
-The model will produce modality-aware region embeddings suitable for downstream evaluation.
+Graph construction is deterministic.
 
 ---
 
-## Part C — Downstream Interpolation (to be completed)
+# 4. Train Self-Supervised Model (GeoModRank)
 
-Evaluation protocol:
+```
+python -m src.training.train_ssl data/v1_seed7
+```
 
-- 70 / 10 / 20 region split (train / validation / test)
-- Stratified by `state_id` when feasible
-- Downstream predictor: ridge regression or small MLP
-- Baseline: coordinate-only spatial regression (kNN or IDW)
+This:
 
-Metrics reported per target:
+- Trains GeoModRank using masked multimodal reconstruction  
+- Applies Laplacian smoothness regularization  
+- Saves:
+  - geomodrank.pt (checkpoint)
+  - embeddings.pt
+  - train_ssl_meta.json
+
+Embeddings are 192-dimensional region representations.
+
+---
+
+# 5. Extract Region Embeddings
+
+Embeddings are automatically exported during training and saved as:
+
+```
+data/v1_seed7/embeddings.pt
+```
+
+Each row corresponds to one region.
+
+---
+
+# 6. Downstream Interpolation Evaluation
+
+```
+python -m src.downstream.evaluate data/v1_seed7
+```
+
+This:
+
+- Creates deterministic 70/10/20 train/val/test split (stratified by state_id)
+- Trains downstream predictors:
+  - Ridge regression
+  - Small MLP
+- Compares against coordinate-only baselines:
+  - IDW
+  - kNN
+  - NWKR
+- Saves:
+  - splits_seed7.pt
+  - downstream_results_seed7_val.json
+  - downstream_results_seed7_test.json
+
+Metrics:
 - MSE
 - RMSE
 - R²
 
 ---
 
-## Reproducibility
+# Programmatic Validation
 
-All components are seed-controlled and deterministic.  
-Seeds are stored in `meta.json`, and graph parameters are stored in `graph.pt`.
+Before training, automated tests run via:
+
+```
+pytest
+```
+
+Tests verify:
+
+- Schema and tensor shapes
+- SSL training stability (no NaNs)
+- Embedding export shape and ordering
+
+All tests must pass before training proceeds.
 
 ---
 
-## Computational Resources
+# Dataset Design Summary
+
+Regions are defined by planar coordinates `(x, y) ∈ ℝ²`.  
+A kNN graph is constructed using Euclidean distance.
+
+Each region contains three modalities:
+
+- Climate-like features  
+- Pollution-like features  
+- Socio-demographic-like features  
+
+Structured missingness masks are generated per modality.
+
+Two continuous targets (`y1`, `y2`) depend on:
+
+- Smooth spatial latent fields  
+- Modality-level aggregates  
+- State-level shifts  
+- Additive noise  
+
+All components are deterministic given seed 7.
+
+---
+
+# Reproducibility Details
+
+Seed used for reported results: **7**
+
+Key hyperparameters are stored in:
+
+- `configs/dataset.yaml`
+- `train_ssl_meta.json`
+
+All randomness is controlled via explicit seeding.
+
+---
+
+# Deliverables Included
+
+This repository contains:
+
+- Full implementation (well-documented code)
+- Programmatic validation tests
+- End-to-end runnable pipeline
+- `report.pdf` (2–3 page research note)
+- Reproducible results under fixed seed
+
+---
+
+# Computational Resources
 
 Experiments were conducted on macOS (Apple Silicon, CPU-only PyTorch).  
-Model and dataset sizes were intentionally kept modest to ensure reproducibility.
+Dataset size (N=2000) and model size were selected to ensure full reproducibility.
 
 ---
 
-## AI Assistance Disclosure
+# AI Assistance Disclosure
 
-AI-based tools were used for code refactoring, structural suggestions, and documentation drafting.  
-All final code was manually reviewed, verified for correctness, and tested for determinism.  
-The author remains fully responsible for the final implementation.
+AI-based tools were used for structural suggestions and documentation drafting.  
+All modeling decisions, implementation logic, debugging, and evaluation were developed and verified by the author.  
+The author assumes full responsibility for the final implementation.
