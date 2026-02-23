@@ -58,9 +58,10 @@ conda activate harvard_postdoc
 pip install -r requirements.txt
 ```
 
-Python: **3.10**  
-Frameworks: **PyTorch**, **PyTorch Geometric**
-Hardware: Experiments were conducted on a CPU-only machine (8-core, 8GB RAM). No GPU acceleration was used.
+`Python`: **3.10**  
+`Frameworks` : **PyTorch**, **PyTorch Geometric**
+`Hardware`: Experiments were conducted on a CPU-only machine (8-core, 8GB RAM). No GPU acceleration was used.
+
 ---
 
 
