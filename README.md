@@ -2,17 +2,23 @@
 
 This repository contains my submission for the homework assignment associated with the Postdoctoral Research Position in AI for Healthy Climate Adaptation.
 
-It provides a fully reproducible, end-to-end pipeline that:
+## Framework Overview
+
+![GeoModRank Framework](geoModRank_framework.jpg)
+
+*Figure 1: End-to-end pipeline for deterministic synthetic geospatial data generation, spatial kNN graph construction, self-supervised training (GeoModRank), embedding extraction, and downstream interpolation evaluation.*
+
+The framework above implements a fully reproducible, end-to-end pipeline that:
 
 1. Generates a deterministic synthetic geospatial dataset  
-2. Trains a spatially-aware self-supervised model (GeoModRank)  
-3. Extracts region embeddings  
-4. Evaluates embeddings on a downstream interpolation task  
+2. Constructs a spatial kNN graph over regions  
+3. Trains a spatially-aware self-supervised model (GeoModRank)  
+4. Extracts region-level embeddings  
+5. Evaluates embeddings on a downstream spatial interpolation task  
+
+The design emphasizes spatial structure, multimodal reconstruction, and deterministic reproducibility.
 
 All results reported in `report.pdf` are reproducible from this repository using the commands below.
-
----
-
 # Quick Reproduction (End-to-End)
 
 From a clean clone:
