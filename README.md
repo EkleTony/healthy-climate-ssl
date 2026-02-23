@@ -3,7 +3,7 @@
 
 This repository implements a spatially-aware self-supervised learning framework for synthetic geospatial data, integrating spatial graph structure with multimodal masked reconstruction to learn region-level representations under strict deterministic controls for full reproducibility.
 
-This is developed as my submission for the `homework task` associated with the `Postdoctoral` Research Position in AI for Healthy Climate Adaptation.
+This repository was developed as my submission for the `homework task` associated with the `Postdoctoral` Research Position in AI for Healthy Climate Adaptation.
 
 ## GeoModRank Framework Overview
 
@@ -22,7 +22,7 @@ The framework implements a fully reproducible, end-to-end pipeline that:
 All results reported in `report.pdf` are reproducible from this repository using the commands below.
 
 
-## Quick Reproduction (End-to-End)
+## Quick Reproduction 
 
 From a clean clone:
 
@@ -34,7 +34,6 @@ conda create -n harvard_postdoc python=3.10
 conda activate harvard_postdoc
 pip install -r requirements.txt
 
-chmod +x run_all.sh
 ./run_all.sh
 ```
 
@@ -59,8 +58,7 @@ pip install -r requirements.txt
 ```
 
 `Python`: **3.10**  
-`Frameworks` : **PyTorch**, **PyTorch Geometric**
-
+`Frameworks` : **PyTorch**, **PyTorch Geometric**n
 `Hardware`: Experiments were conducted on a CPU-only machine (8-core, 8GB RAM). No GPU acceleration was used.
 
 ---
@@ -91,6 +89,6 @@ This repository includes:
 ---
 ### AI Assistance Disclosure
 
-AI-based tools (large language models) were used for structural refinement, documentation refinement, and minor code refactoring.
+AI-based tools (including large language models such as ChatGPT) were used for structural suggestions, documentation refinement, and minor refactoring.
 
 All modeling logic, mathematical formulation, dataset generation, and evaluation procedures were independently implemented, executed, and verified. The author assumes full responsibility for correctness and reproducibility.
