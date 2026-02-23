@@ -60,6 +60,7 @@ pip install -r requirements.txt
 
 `Python`: **3.10**  
 `Frameworks` : **PyTorch**, **PyTorch Geometric**
+
 `Hardware`: Experiments were conducted on a CPU-only machine (8-core, 8GB RAM). No GPU acceleration was used.
 
 ---
@@ -67,15 +68,14 @@ pip install -r requirements.txt
 
 ### Implementation Summary
 
-The pipeline consists of:
+The pipeline includes:
 
-1. A deterministic synthetic geospatial dataset with multimodal region-level features  
-2. A spatially-aware self-supervised model trained via masked reconstruction  
-3. Extraction of 192-dimensional region embeddings  
-4. A standardized 70/10/20 region-level interpolation split  
-5. Evaluation using simple downstream predictors (Ridge / MLP) compared to coordinate-based baselines  (Mean, IDW, KNN, NWKR)  a
+1. Deterministic synthetic geospatial data with multimodal features  
+2. A spatially-aware self-supervised model (GeoModRank)  
+3. 192-dimensional region embeddings with a 70/10/20 interpolation split  
+4. Downstream evaluation (Ridge / MLP) against coordinate-based baselines  
 
-All randomness is explicitly seeded, and validation tests (`pytest`) are included to verify schema integrity, training stability, and embedding export.
+All experiments are seeded for reproducibility, and validation tests (`pytest`) verify data integrity and training stability.
 
 ---
 
