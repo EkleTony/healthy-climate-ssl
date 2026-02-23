@@ -47,7 +47,7 @@ data/v1_seed7/
 
 ---
 
-# 1. Environment Setup
+## 1. Environment Setup
 
 ```bash
 conda create -n harvard_postdoc python=3.10
@@ -60,7 +60,7 @@ Frameworks: **PyTorch**, **PyTorch Geometric**
 
 ---
 
-# 2. Generate Synthetic Dataset
+## 2. Generate Synthetic Dataset
 
 Dataset configuration:
 
@@ -91,7 +91,7 @@ Dataset generation is deterministic given the seed.
 
 ---
 
-# 3. Build Spatial kNN Graph
+## 3. Build Spatial kNN Graph
 
 ```bash
 python -m src.data.graph data/v1_seed7 configs/dataset.yaml 7
@@ -105,7 +105,7 @@ Graph construction is deterministic.
 
 ---
 
-# 4. Train Self-Supervised Model (GeoModRank)
+## 4. Train Self-Supervised Model (GeoModRank)
 
 ```bash
 python -m src.training.train_ssl data/v1_seed7
@@ -124,7 +124,7 @@ Embeddings are 192-dimensional region representations.
 
 ---
 
-# 5. Extract Region Embeddings
+## 5. Extract Region Embeddings
 
 Embeddings are automatically exported during training:
 
@@ -136,7 +136,7 @@ Each row corresponds to one region in the dataset.
 
 ---
 
-# 6. Downstream Interpolation Evaluation
+## 6. Downstream Interpolation Evaluation
 
 ```bash
 python -m src.downstream.evaluate data/v1_seed7
@@ -165,7 +165,7 @@ Metrics reported:
 
 ---
 
-# Programmatic Validation
+### Programmatic Validation
 
 Automated tests run before training:
 
@@ -183,7 +183,7 @@ All tests must pass before training proceeds.
 
 ---
 
-# Dataset Design Summary
+### Dataset Design Summary
 
 Regions are defined by planar coordinates `(x, y) ∈ ℝ²`.  
 A kNN graph is constructed using Euclidean distance.
@@ -207,7 +207,7 @@ All components are deterministic under seed 7.
 
 ---
 
-# Reproducibility Details
+### Reproducibility Details
 
 Seed used for reported results: **7**  
 Python version: **3.10**
@@ -221,7 +221,7 @@ All randomness is controlled via explicit seeding.
 
 ---
 
-# Deliverables Included
+### Deliverables Included
 
 This repository contains:
 
@@ -233,7 +233,7 @@ This repository contains:
 
 ---
 
-# Computational Resources
+### Computational Resources
 
 Experiments were conducted on macOS with a 3.2 GHz 8-core CPU and 8 GB RAM.  
 No GPU acceleration was used.  
@@ -241,7 +241,7 @@ Dataset size (N=2000) and embedding dimension (192) were selected to ensure repr
 
 ---
 
-# AI Assistance Disclosure
+### AI Assistance Disclosure
 
 AI-based tools (large language models) were used for structural suggestions, documentation drafting, and minor code refactoring.
 
