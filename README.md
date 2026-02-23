@@ -21,10 +21,11 @@ From a clean clone:
 git clone <repo>
 cd healthy-climate-ssl
 
-conda create -n havard_postdoc python=3.10
-conda activate havard_postdoc
+conda create -n harvard_postdoc python=3.10
+conda activate harvard_postdoc
 pip install -r requirements.txt
 
+chmod +x run_all.sh
 ./run_all.sh
 ```
 
@@ -49,8 +50,8 @@ data/v1_seed7/
 # 1. Environment Setup
 
 ```bash
-conda create -n havard_postdoc python=3.10
-conda activate havard_postdoc
+conda create -n harvard_postdoc python=3.10
+conda activate harvard_postdoc
 pip install -r requirements.txt
 ```
 
@@ -148,6 +149,7 @@ This:
   - Ridge regression
   - Small MLP
 - Compares against coordinate-only baselines:
+  - Mean
   - IDW
   - kNN
   - NWKR
@@ -207,7 +209,8 @@ All components are deterministic under seed 7.
 
 # Reproducibility Details
 
-Seed used for reported results: **7**
+Seed used for reported results: **7**  
+Python version: **3.10**
 
 Key hyperparameters and configuration stored in:
 
@@ -232,13 +235,16 @@ This repository contains:
 
 # Computational Resources
 
-Experiments were conducted on macOS (Apple Silicon, CPU-only PyTorch).  
-Dataset size (N=2000) and model size were selected to ensure full reproducibility.
+Experiments were conducted on macOS with a 3.2 GHz 8-core CPU and 8 GB RAM.  
+No GPU acceleration was used.  
+Dataset size (N=2000) and embedding dimension (192) were selected to ensure reproducibility.
 
 ---
 
 # AI Assistance Disclosure
 
-AI-based tools were used for structural suggestions and documentation drafting.  
-All modeling decisions, implementation logic, debugging, and evaluation were developed and verified by the author.  
-The author assumes full responsibility for the final implementation.
+AI-based tools (large language models) were used for structural suggestions, documentation drafting, and minor code refactoring.
+
+No core modeling logic, mathematical formulation, data generation process, or evaluation procedure was automatically generated without manual verification. All results were independently executed, validated, and tested for determinism.
+
+The author assumes full responsibility for correctness and reproducibility.
