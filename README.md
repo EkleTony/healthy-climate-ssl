@@ -38,7 +38,7 @@ chmod +x run_all.sh
 ./run_all.sh
 ```
 
-This script executes the complete pipeline, including validation tests, deterministic dataset generation, spatial kNN graph construction, self-supervised training (GeoModRank), embedding export, and downstream interpolation evaluation.
+This script runs the full pipeline: validation tests, dataset generation, spatial kNN graph construction, self-supervised training (GeoModRank), embedding export, and downstream interpolation.
 
 All outputs are written to:
 
@@ -60,7 +60,6 @@ pip install -r requirements.txt
 
 Python: **3.10**  
 Frameworks: **PyTorch**, **PyTorch Geometric**
-
 Hardware: Experiments were conducted on a CPU-only machine (8-core, 8GB RAM). No GPU acceleration was used.
 ---
 
