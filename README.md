@@ -3,7 +3,7 @@
 
 This repository implements a spatially-aware self-supervised learning framework for synthetic geospatial data, integrating spatial graph structure with multimodal masked reconstruction to learn region-level representations under strict deterministic controls for full reproducibility.
 
-This repository was developed as my submission for the `homework task` associated with the `Postdoctoral` Research Position in AI for Healthy Climate Adaptation.
+This repository was developed as my submission for the homework task associated with the Postdoctoral Research Position in AI for Healthy Climate Adaptation.
 
 ## GeoModRank Framework Overview
 
@@ -58,8 +58,8 @@ pip install -r requirements.txt
 ```
 
 - `Python`: **3.10**  
-- `Frameworks` : **PyTorch**, **PyTorch Geometric**n
-- `Hardware`: Experiments were conducted on a CPU-only machine (8-core, 8GB RAM). No GPU used.
+- `Frameworks`: **PyTorch**, **PyTorch Geometric**
+- `Hardware`: CPU-only (8-core, 8GB RAM); no GPU used.
 
 ---
 
@@ -83,8 +83,8 @@ This repository includes:
 
 - Complete implementation  
 - Validation tests  
-- End-to-end runnable pipeline  
-- `report.pdf` (3 page research note)  
+- End-to-end pipeline  
+- `report.pdf` (3-page research note)  
 
 ---
 ### AI Assistance Disclosure
