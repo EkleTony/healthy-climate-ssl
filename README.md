@@ -59,7 +59,7 @@ pip install -r requirements.txt
 
 - `Python`: **3.10**  
 - `Frameworks` : **PyTorch**, **PyTorch Geometric**n
-- `Hardware`: Experiments were conducted on a CPU-only machine (8-core, 8GB RAM). No GPU acceleration was used.
+- `Hardware`: Experiments were conducted on a CPU-only machine (8-core, 8GB RAM). No GPU used.
 
 ---
 
