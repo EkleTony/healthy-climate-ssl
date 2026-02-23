@@ -19,8 +19,7 @@ The framework implements a fully reproducible, end-to-end pipeline that:
 4. Extracts region-level embeddings  
 5. Evaluates embeddings on a downstream spatial interpolation task  
 
-All results reported in `report.pdf` are reproducible from this repository using the commands below.
-
+All results reported in the accompanying [report.pdf](report.pdf) are reproducible using the commands below.
 
 ## Quick Reproduction 
 
