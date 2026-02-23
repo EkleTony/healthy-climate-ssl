@@ -73,7 +73,7 @@ The pipeline includes:
 3. 192-dimensional region embeddings with a 70/10/20 interpolation split  
 4. Downstream evaluation (Ridge / MLP) against coordinate-based baselines  
 
-All experiments are seeded for reproducibility, and validation tests (`pytest`) verify data integrity and training stability.
+All experiments are seeded for reproducibility, and validation tests (pytest) verify data integrity and training.
 
 ---
 
