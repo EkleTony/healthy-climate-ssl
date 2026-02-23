@@ -18,13 +18,13 @@ echo "Starting full pipeline..."
 echo ""
 
 echo "======================================"
-echo " Step 0: Running Programmatic Checks"
+echo " Step 0: Running Programmatic PyTest Checks"
 echo "======================================"
 pytest -v
 echo ""
 
 echo "======================================"
-echo " Step 1: Train GeoModRank (SSL)"
+echo " Step 1: Train GeoModRank Graph-Based Framework (SSL)"
 echo "======================================"
 python -m src.training.train_ssl \
   --data_dir "$DATA_DIR" \
