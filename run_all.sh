@@ -18,13 +18,27 @@ echo "Starting full pipeline..."
 echo ""
 
 echo "======================================"
-echo " Step 0: Running Programmatic PyTest Checks"
+echo " Step 0: Generate Deterministic Synthetic Dataset"
+echo "======================================"
+# This writes regions.pt, features.pt, masks.pt, targets.pt, meta.json into $DATA_DIR
+python -m src.data.generate
+echo ""
+
+echo "======================================"
+echo " Step 1: Build Spatial kNN Graph"
+echo "======================================"
+# This writes graph.pt into $DATA_DIR
+python -m src.data.graph "$DATA_DIR" configs/dataset.yaml "$SEED"
+echo ""
+
+echo "======================================"
+echo " Step 2: Running Programmatic PyTest Checks"
 echo "======================================"
 pytest -v
 echo ""
 
 echo "======================================"
-echo " Step 1: Train GeoModRank Graph-Based Framework (SSL)"
+echo " Step 3: Train GeoModRank Graph-Based Framework (SSL)"
 echo "======================================"
 python -m src.training.train_ssl \
   --data_dir "$DATA_DIR" \
@@ -37,7 +51,7 @@ python -m src.training.train_ssl \
 echo ""
 
 echo "======================================"
-echo " Step 2: Create Stratified Split"
+echo " Step 4: Create Stratified Split"
 echo "======================================"
 python -m src.eval.split \
   --data_dir "$DATA_DIR" \
@@ -45,7 +59,7 @@ python -m src.eval.split \
 echo ""
 
 echo "======================================"
-echo " Step 3: Downstream Interpolation (VAL)"
+echo " Step 5: Downstream Interpolation (VAL)"
 echo "======================================"
 python -m src.training.eval_interpolation \
   --data_dir "$DATA_DIR" \
@@ -55,7 +69,7 @@ python -m src.training.eval_interpolation \
 echo ""
 
 echo "======================================"
-echo " Step 4: Downstream Interpolation (TEST — final)"
+echo " Step 6: Downstream Interpolation (TEST — final)"
 echo "======================================"
 python -m src.training.eval_interpolation \
   --data_dir "$DATA_DIR" \
