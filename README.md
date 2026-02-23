@@ -1,6 +1,9 @@
 # AI for Healthy Climate Adaptation — Synthetic Geospatial SSL (Harvard PostDoc)
 
-This repository contains my submission for the homework assignment associated with the Postdoctoral Research Position in AI for Healthy Climate Adaptation.
+
+This repository implements a spatially-aware self-supervised learning framework for synthetic geospatial data, integrating spatial graph structure with multimodal masked reconstruction to learn region-level representations under strict deterministic controls for full reproducibility.
+
+It was developed as my submission for the `homework task` associated with the `Postdoctoral` Research Position in AI for Healthy Climate Adaptation.
 
 ## Framework Overview
 
@@ -8,7 +11,7 @@ This repository contains my submission for the homework assignment associated wi
 
 *Figure 1: End-to-end pipeline for deterministic synthetic geospatial data generation, spatial kNN graph construction, self-supervised training (GeoModRank), embedding extraction, and downstream interpolation evaluation.*
 
-The framework above implements a fully reproducible, end-to-end pipeline that:
+The framework implements a fully reproducible, end-to-end pipeline that:
 
 1. Generates a deterministic synthetic geospatial dataset  
 2. Constructs a spatial kNN graph over regions  
@@ -16,7 +19,6 @@ The framework above implements a fully reproducible, end-to-end pipeline that:
 4. Extracts region-level embeddings  
 5. Evaluates embeddings on a downstream spatial interpolation task  
 
-The design emphasizes spatial structure, multimodal reconstruction, and deterministic reproducibility.
 
 All results reported in `report.pdf` are reproducible from this repository using the commands below.
 # Quick Reproduction (End-to-End)
