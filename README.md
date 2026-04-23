@@ -3,7 +3,9 @@
 
 This repository implements a spatially-aware self-supervised learning framework for synthetic geospatial data, integrating spatial graph structure with multimodal masked reconstruction to learn region-level representations under strict deterministic controls for full reproducibility.
 
-This repository was developed as my submission for the homework task associated with the Postdoctoral Research Position in AI for Healthy Climate Adaptation.
+This repository was developed as part of a research project on spatially-aware self-supervised learning for geospatial data, originally prepared in the context of a postdoctoral research evaluation in AI for climate adaptation.
+
+
 
 ## GeoModRank Framework Overview
 
